@@ -1,1 +1,0 @@
-create view horror_view as select distinct r.customer_id from customer c,category ca,film_category fc,inventory i,rental r where ca.category_id = fc.category_id and ca.name = "Horror" and fc.film_id = i.film_id and i.inventory_id = r.inventory_id and c.customer_id = r.customer_id order by r.customer_id;
