@@ -1,0 +1,79 @@
+2a. Xpath : //food[contains(name,'Chicken')]/calories/@total
+Ans: 410
+
+2b. Xpath: /nutrition/food[vitamins/c>0]/name/text()
+Ans.
+<result>
+Beef Frankfurter, Quarter Pound 
+Chicken Pot Pie
+Cole Slaw
+Potato Chips
+</result>
+
+2c. Xpath: /nutrition/food[vitamins/c>0 and vitamins/a>0]/name/text()
+Ans.
+<result>
+Chicken Pot Pie
+Cole Slaw
+</result>
+
+2d./nutrition/food[total-fat/text()>0 and saturated-fat/text()>=total-fat/text()*0.5]/name/text()
+Ans. Truffles, Dark Chocolate
+
+2e. 
+declare option saxon:output "omit-xml-declaration=yes";
+let $chol:= //food/cholesterol
+let $max_chol := max($chol)
+return
+
+for $var in (1 to count(//food))
+return if(//food[$var]/cholesterol=$max_chol) then
+//food[$var]/name/text()
+else
+()
+
+
+Ans: Eggs
+
+
+
+2f. 
+declare option saxon:output "omit-xml-declaration=yes";
+<result>
+{
+for $var in /nutrition/food
+let $name := $var/name
+let $total_fat:= $var/total-fat
+where $var/minerals/ca>0
+return <food>{$name,$total_fat}</food>
+}
+</result>
+
+Ans:
+<result>
+   <food>
+      <name>Bagels, New York Style </name>
+      <total-fat>4</total-fat>
+   </food>
+   <food>
+      <name>Beef Frankfurter, Quarter Pound </name>
+      <total-fat>32</total-fat>
+   </food>
+   <food>
+      <name>Chicken Pot Pie</name>
+      <total-fat>22</total-fat>
+   </food>
+   <food>
+      <name>Cole Slaw</name>
+      <total-fat>0</total-fat>
+   </food>
+   <food>
+      <name>Eggs</name>
+      <total-fat>4.5</total-fat>
+   </food>
+   <food>
+      <name>Hazelnut Spread</name>
+      <total-fat>10</total-fat>
+   </food>
+</result>
+
